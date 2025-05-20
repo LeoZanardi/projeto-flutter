@@ -66,7 +66,8 @@ class _UserListScreenState extends State<UserListScreen> {
           ),
         );
       } else {
-        final error = json.decode(response.body)['error'] ?? 'Erro desconhecido';
+        final error =
+            json.decode(response.body)['error'] ?? 'Erro desconhecido';
         throw Exception('Falha ao excluir usuário: $error');
       }
     } catch (e) {
@@ -107,7 +108,18 @@ class _UserListScreenState extends State<UserListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lista de Usuários'),
+        title: const Text(
+          'Lista de Horários Marcados',
+          style: TextStyle(
+
+              ///Estilos Do titulo (cor, fonte , etc)
+              fontFamily: 'Arial',
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 6, 1, 85)),
+        ),
+        backgroundColor: const Color.fromARGB(
+            255, 255, 255, 255), //BackgroundColor do titulo),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -116,7 +128,8 @@ class _UserListScreenState extends State<UserListScreen> {
               itemBuilder: (context, index) {
                 final user = _users[index];
                 return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   child: ExpansionTile(
                     title: Text(
                       user['name'] ?? 'Nome não disponível',
@@ -131,11 +144,13 @@ class _UserListScreenState extends State<UserListScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Telefone: ${user['phone'] ?? 'Não disponível'}'),
+                            Text(
+                                'Telefone: ${user['phone'] ?? 'Não disponível'}'),
                             const SizedBox(height: 8),
                             Text('Data: ${user['date'] ?? 'Não disponível'}'),
                             const SizedBox(height: 8),
-                            Text('Hora: ${_formatTimeDisplay(user['hour'] ?? '')}'),
+                            Text(
+                                'Hora: ${_formatTimeDisplay(user['hour'] ?? '')}'),
                             const SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
@@ -183,7 +198,7 @@ class _UserListScreenState extends State<UserListScreen> {
     if (time.isEmpty) return 'Não disponível';
     final parts = time.split(':');
     if (parts.length < 2) return time;
-    
+
     final hour = int.tryParse(parts[0]) ?? 0;
     final period = hour < 12 ? 'AM' : 'PM';
     final displayHour = hour <= 12 ? hour : hour - 12;

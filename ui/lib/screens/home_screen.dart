@@ -12,41 +12,78 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       // Barra superior com título
       appBar: AppBar(
-        title: const Text('Form App'),
+        centerTitle: true,
+        title: const Text(
+          'Bem-vindo à Tech Barber: inovação e estilo no horário definido!',
+          style: TextStyle(
+
+              ///Estilos Do titulo (cor, fonte , etc)
+              fontFamily: 'Arial',
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
+        ),
+        backgroundColor:
+            const Color.fromARGB(255, 6, 1, 85), //BackgroundColor do titulo
       ),
+
       // Corpo da tela com os botões de navegação
       body: Center(
         child: Column(
-          // Centraliza os botões verticalmente
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Botão para acessar o formulário de cadastro
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navega para a tela de formulário
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const FormScreen()),
                 );
               },
-              child: const Text('Ir para o Formulário'),
+              child: const Text(
+                'Fazer um Agendamento',
+                style: TextStyle(
+                  ///Estilos Do botao (cor, fonte , etc)
+                  fontFamily: 'Arial',
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 6, 1, 85),
+                ),
+              ),
+            ),
+
+            ///imagem da logo
+            Image.asset(
+              'assets/logo.png',
+              width: 150,
+              height: 250,
             ),
             // Espaçamento entre os botões
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
             // Botão para acessar a lista de usuários
             ElevatedButton(
               onPressed: () {
                 // Navega para a tela de listagem de usuários
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const UserListScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => const UserListScreen()),
                 );
               },
-              child: const Text('Ver Usuários Cadastrados'),
+              child: const Text(
+                'Conferir Horários Marcados',
+                style: TextStyle(
+                  ///Estilos Do botao (cor, fonte , etc)
+                  fontFamily: 'Arial',
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(255, 6, 1, 85),
+                ),
+              ),
             ),
           ],
         ),
       ),
     );
   }
-} 
+}

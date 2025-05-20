@@ -25,7 +25,7 @@ class _FormScreenState extends State<FormScreen> {
       _nameController.text = widget.userToEdit!['name'] ?? '';
       _phoneController.text = widget.userToEdit!['phone'] ?? '';
       _dateController.text = widget.userToEdit!['date'] ?? '';
-      
+
       // Normaliza o formato da hora
       final hour = widget.userToEdit!['hour'] ?? '';
       if (hour.isNotEmpty) {
@@ -58,8 +58,9 @@ class _FormScreenState extends State<FormScreen> {
 
   Future<void> _submitForm() async {
     if (!_formKey.currentState!.validate()) return;
-    
-    if (_hourController.text.isEmpty || !_getTimeSlots().contains(_hourController.text)) {
+
+    if (_hourController.text.isEmpty ||
+        !_getTimeSlots().contains(_hourController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Por favor, selecione um horário válido'),
@@ -118,7 +119,7 @@ class _FormScreenState extends State<FormScreen> {
     } catch (e) {
       setState(() => _isLoading = false);
       if (!mounted) return;
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Erro ao enviar dados. Tente novamente.'),
@@ -141,7 +142,20 @@ class _FormScreenState extends State<FormScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.userToEdit != null ? 'Editar Usuário' : 'Formulário de Cadastro'),
+        title: Text(
+          widget.userToEdit != null
+              ? 'Editar Usuário'
+              : 'Cadastre já o seu Horário !',
+          style: TextStyle(
+
+              ///Estilos Do titulo (cor, fonte , etc)
+              fontFamily: 'Arial',
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: const Color.fromARGB(255, 6, 1, 85)),
+        ),
+        backgroundColor: const Color.fromARGB(
+            255, 255, 255, 255), //BackgroundColor do titulo),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -155,42 +169,63 @@ class _FormScreenState extends State<FormScreen> {
                   labelText: 'Nome',
                   border: OutlineInputBorder(),
                 ),
-                validator: (value) => value?.isEmpty ?? true ? 'Por favor, insira seu nome' : null,
+                validator: (value) => value?.isEmpty ?? true
+                    ? 'Por favor, insira seu nome'
+                    : null,
+                style: TextStyle(
+                  ///Estilos da Label (cor, fonte , etc)
+                  fontFamily: 'Arial',
+                  color: const Color.fromARGB(255, 6, 1, 85),
+                ),
               ),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _phoneController,
-                decoration: const InputDecoration(
-                  labelText: 'Telefone',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.phone,
-                validator: (value) => value?.isEmpty ?? true ? 'Por favor, insira seu telefone' : null,
-              ),
+                  controller: _phoneController,
+                  decoration: const InputDecoration(
+                    labelText: 'Telefone',
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.phone,
+                  validator: (value) => value?.isEmpty ?? true
+                      ? 'Por favor, insira seu telefone'
+                      : null,
+                  style: TextStyle(
+                    ///Estilos da Label (cor, fonte , etc)
+                    fontFamily: 'Arial',
+                    color: const Color.fromARGB(255, 6, 1, 85),
+                  )),
               const SizedBox(height: 16),
               TextFormField(
-                controller: _dateController,
-                decoration: const InputDecoration(
-                  labelText: 'Data',
-                  border: OutlineInputBorder(),
-                ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime(2100),
-                  );
-                  if (pickedDate != null) {
-                    _dateController.text = pickedDate.toString().substring(0, 10);
-                  }
-                },
-                validator: (value) => value?.isEmpty ?? true ? 'Por favor, insira uma data' : null,
-              ),
+                  controller: _dateController,
+                  decoration: const InputDecoration(
+                    labelText: 'Data',
+                    border: OutlineInputBorder(),
+                  ),
+                  readOnly: true,
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime(2100),
+                    );
+                    if (pickedDate != null) {
+                      _dateController.text =
+                          pickedDate.toString().substring(0, 10);
+                    }
+                  },
+                  validator: (value) => value?.isEmpty ?? true
+                      ? 'Por favor, insira uma data'
+                      : null,
+                  style: TextStyle(
+                    ///Estilos da Label (cor, fonte , etc)
+                    fontFamily: 'Arial',
+                    color: const Color.fromARGB(255, 6, 1, 85),
+                  )),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                value: _hourController.text.isNotEmpty && _getTimeSlots().contains(_hourController.text)
+                value: _hourController.text.isNotEmpty &&
+                        _getTimeSlots().contains(_hourController.text)
                     ? _hourController.text
                     : null,
                 decoration: const InputDecoration(
@@ -208,7 +243,9 @@ class _FormScreenState extends State<FormScreen> {
                     _hourController.text = newValue ?? '';
                   });
                 },
-                validator: (value) => value?.isEmpty ?? true ? 'Por favor, selecione um horário' : null,
+                validator: (value) => value?.isEmpty ?? true
+                    ? 'Por favor, selecione um horário'
+                    : null,
               ),
               const SizedBox(height: 24),
               SizedBox(
@@ -218,7 +255,16 @@ class _FormScreenState extends State<FormScreen> {
                   onPressed: _isLoading ? null : _submitForm,
                   child: _isLoading
                       ? const CircularProgressIndicator()
-                      : Text(widget.userToEdit != null ? 'Atualizar' : 'Enviar'),
+                      : Text(
+                          widget.userToEdit != null ? 'Atualizar' : 'Enviar',
+                          style: TextStyle(
+                            ///Estilos Do botao (cor, fonte , etc)
+                            fontFamily: 'Arial',
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(255, 6, 1, 85),
+                          ),
+                        ),
                 ),
               ),
             ],
